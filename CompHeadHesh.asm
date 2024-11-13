@@ -1,6 +1,6 @@
 .code
 align xmmword
-CompValue:
+CompHeadHesh:
 ; s0
 	pshufd xmm4,xmm0,10100101b
 	movdqa xmm5,xmm4
@@ -16,8 +16,8 @@ CompValue:
 	pshufd xmm4,xmm2,10011001b
 	paddd xmm5,xmm4
 ; w[i] + k[i] + h
-	movdq2q mm6,xmm0
-	paddd mm7,mm6
+	movdq2q mm7,xmm0
+	paddd mm7,qword ptr[rbp]
 	paddd mm7,mm3
 ;	
 	shufps xmm0,xmm1,01001110b
@@ -37,4 +37,5 @@ CompValue:
 ; s1 + s0 + w[0] + w[9]
 	pslldq xmm5,8
 	paddd xmm3,xmm5
-ret
+	clc
+	

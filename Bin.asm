@@ -4,8 +4,13 @@ align xmmword
 ?ImplBin@SHA256@KILYAV@@CA?AV?$array@E$0CA@@std@@PEBDI@Z endp
 	
 Bin:
-	mov r10,rcx
-	mov r11,rdx
+	push rbp
+	mov r10,rsi
+	mov r11,rdi
+	
+	lea rbp,[const]
+	mov rsi,rdx
+	mov rdi,rcx
 	mov rcx,r8
 	lea rdx,[r8 * 8]
 	
@@ -19,9 +24,9 @@ Bin:
 	movd mm3,rax
 	
 	call LoadData
+	call CompHeadHesh
+	add rbp,10h
 	
-	include Round.asm
 	
 	include LoadData.asm
-	include CompHesh.asm
-	include CompValue.asm
+	include CompHeadHesh.asm

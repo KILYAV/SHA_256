@@ -1,4 +1,5 @@
 .code
+align xmmword
 LoadData:
 	pxor xmm1,xmm1
 	pxor xmm2,xmm2
@@ -13,7 +14,7 @@ jle	LoadPlugData
 je	LoadDataLine
 	
 	and eax,038h
-	mov r8,[r11 + rax]
+	mov r8,[rsi + rax]
 	mov r9,80h
 	shl ecx,3
 	ror r8,cl
@@ -23,20 +24,19 @@ je	LoadDataLine
 	xor r8,r8
 	btr eax,3
 	cmovc r8,r9
-	cmovc r9,[r11 + rax]
+	cmovc r9,[rsi + rax]
 	
 	bswap r8
 	bswap r9
-	ror r8,20h
-	ror r9,20h
 	movd xmm0,r9
 	movd xmm4,r8
-	unpcklpd xmm0,xmm4
+	shufps xmm0,xmm4,00010001b
 	sub rcx,10h
 	
 	cmp eax,0
 jg	jg_LoadDataLine
 
+align xmmword
 rg_LoadDataLine:	
 	pshufd xmm4,xmm3,11101110b
 	movd rax,xmm4
@@ -57,7 +57,7 @@ LoadDataLine:
 	movdqa xmm2,xmm1
 	movdqa xmm1,xmm0
 	
-	movdqu xmm4,xmmword ptr[r11]
+	movdqu xmm4,xmmword ptr[rsi]
 	movdqa xmm5,xmm4
 	psllw xmm4,8
 	psrlw xmm5,8

@@ -1,8 +1,9 @@
 .code
 align xmmword
 CompTailHesh:
+	clc
 ; s1
-	pshufw mm4,mm2,01000100b
+@@:	pshufw mm4,mm2,01000100b
 	psrlq mm4,6
 	pshufw mm5,mm4,11100100b
 	psrlq mm4,5
@@ -18,6 +19,7 @@ CompTailHesh:
 	pxor mm5,mm6
 ; t1
 	paddd mm5,mm7
+	psrlq mm7,20h
 	paddd mm4,mm5
 ; d + t1
 	psllq mm4,20h
@@ -49,5 +51,5 @@ CompTailHesh:
 	paddd mm0,mm4	
 	pshufw mm0,mm0,01001110b
 	cmc
-jc	CompTailHesh
+jc	@b
 ret

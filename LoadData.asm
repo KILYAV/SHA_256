@@ -4,22 +4,21 @@ LoadData:
 	pxor xmm1,xmm1
 	pxor xmm2,xmm2
 
-	cmp rcx,0
+	cmp rdx,0
 jle	LoadPlugData
 
 	mov eax,40h
-	cmp rax,rcx
-	cmovg eax,ecx
+	cmp rax,rdx
+	cmovg eax,edx
 	cmp eax,40h
 je	LoadDataLine
 	
+	movd xmm5,r9
 	and eax,038h
 	mov r8,[rsi + rax]
 	mov r9,80h
-	shl ecx,3
 	ror r8,cl
 	shld r9,r8,cl
-	shr ecx,3
 	
 	xor r8,r8
 	btr eax,3
@@ -31,7 +30,9 @@ je	LoadDataLine
 	movd xmm0,r9
 	movd xmm4,r8
 	shufps xmm0,xmm4,00010001b
-	sub rcx,10h
+	sub rdx,40h
+	add rdx,rax
+	movd r9,xmm5
 	
 	cmp eax,0
 jg	jg_LoadDataLine
@@ -40,8 +41,8 @@ align xmmword
 rg_LoadDataLine:	
 	pshufd xmm4,xmm3,11101110b
 	movd rax,xmm4
-	cmp rcx,-8
-	cmovle rax,rdx
+	cmp rdx,-8
+	cmovle rax,rcx
 	movd xmm4,rax
 	shufps xmm3,xmm4,00010100b
 ret
@@ -64,8 +65,8 @@ LoadDataLine:
 	por xmm4,xmm5
 	pshufhw xmm4,xmm4,10110001b
 	pshuflw xmm0,xmm4,10110001b	
-	add r11,10h
-	sub rcx,10h
+	add rsi,10h
+	sub rdx,10h
 	sub eax,10h
 jnz	LoadDataLine
 ret
@@ -76,6 +77,6 @@ LoadPlugData:
 	movzx eax,al
 	shl eax,7
 	movd xmm0,eax
-	movd xmm3,rdx
+	movd xmm3,rcx
 	pshufd xmm3,xmm3,00011110b
 ret

@@ -37,5 +37,4 @@ CompHeadHesh:
 ; s1 + s0 + w[0] + w[9]
 	pslldq xmm5,8
 	paddd xmm3,xmm5
-	clc
 	

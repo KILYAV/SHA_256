@@ -1,59 +1,67 @@
 .code
 align xmmword
 LoadData:
-	pxor xmm1,xmm1
-	pxor xmm2,xmm2
-
 	cmp rdx,0
 jle	LoadPlugData
 
 	mov eax,40h
-	cmp edx,40h
+	cmp edx,10h
 jge	LoadDataLine
-	
-	and edx,038h
-	mov rax,[rsi + rdx]
+
+ret_LoadDataLine:
+	movd xmm5,eax
+	mov rax,[rsi]
+	bt edx,3
+	cmovc rax,[rsi + 8]
 	mov r8,80h
 	ror rax,cl
 	shld r8,rax,cl
 	
 	xor rax,rax
-	btr edx,3
+	bt edx,3
 	cmovc rax,r8
-	cmovc r8,[rsi + rdx]
+	cmovc r8,[rsi]
 	
 	bswap rax
 	bswap r8
-	movd xmm0,r8
+	movd xmm3,r8
 	movd xmm4,rax
-	shufps xmm0,xmm4,00010001b
-	sub rdx,40h
-	add rdx,rax
+	shufps xmm3,xmm4,00010001b
+	
+	movd eax,xmm5
+	sub rdx,10h
+	sub eax,10h
 	
 	cmp eax,0
-jg	jg_LoadDataLine
-
-align xmmword
-rg_LoadDataLine:	
-	pshufd xmm4,xmm3,11101110b
+jg	LoadZeroLine
+	
+ret_LoadZeroLine:
+	pshufd xmm4,xmm3,10111011b
 	movd rax,xmm4
-	cmp rdx,-8
+	cmp rdx,-9
 	cmovle rax,rcx
 	movd xmm4,rax
 	shufps xmm3,xmm4,00010100b
 ret
 
 align xmmword
-jg_LoadDataLine:
-	call LoadDataLine
-jmp rg_LoadDataLine
+@@:	pxor xmm3,xmm3
+	sub rdx,10h
+	sub eax,10h
+jle	ret_LoadZeroLine
 
 align xmmword
-LoadDataLine:
+LoadZeroLine:
 	movdqa xmm0,xmm1
 	movdqa xmm1,xmm2
 	movdqa xmm2,xmm3
+	cmp rdx,0
+jl	@b
+	cmp rdx,10h
+jl	ret_LoadDataLine
 	
+align xmmword
+LoadDataLine:
 	movdqu xmm3,xmmword ptr[rsi]
 	movdqa xmm4,xmm3
 	psllw xmm3,8
@@ -65,8 +73,9 @@ LoadDataLine:
 	add rsi,10h
 	sub rdx,10h
 	sub eax,10h
-jnz	LoadDataLine
-ret
+	cmp eax,0
+jg	LoadZeroLine
+	ret
 
 align xmmword
 LoadPlugData:
@@ -74,6 +83,10 @@ LoadPlugData:
 	movzx eax,al
 	shl eax,7
 	movd xmm0,eax
+	
+	pxor xmm1,xmm1
+	pxor xmm2,xmm2
+
 	movd xmm3,rcx
 	pshufd xmm3,xmm3,00011110b
 ret

@@ -31,14 +31,14 @@ Bin:
 	call LoadData
 	align xmmword
 	@@:	mov eax,30h
-		call CompHeadHesh
+		call HeadHesh
 		add rbp,10h
 		dec eax
 	jnz	@b
 	
 	align xmmword
 	@@: mov eax,10h
-		call CompTailHesh
+		call TailHesh
 		
 		shufps xmm0,xmm1,01001110b
 		shufps xmm1,xmm2,01001110b
@@ -55,5 +55,7 @@ Bin:
 	
 	
 	include LoadData.asm
-	include CompHeadHesh.asm
-	include CompTailHesh.asm
+	include HeadHesh.asm
+	include TailHesh.asm
+	
+	include Const.asm

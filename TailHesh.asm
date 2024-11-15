@@ -1,6 +1,6 @@
 .code
 align xmmword
-CompTailHesh:
+TailHesh:
 	clc
 ; s1
 @@:	pshufw mm4,mm2,01000100b

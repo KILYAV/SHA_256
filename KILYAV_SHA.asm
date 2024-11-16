@@ -8,12 +8,12 @@ align xmmword
 ;	db 25h,26h,27h,28h,29h,30h,31h,32h
 ;	db 33h,34h,35h,36h,37h,38h,39h,40h
 ;	db 41h,42h,43h,44h,45h,46h,47h,48h
-;	db 49h,50h,51h,52h,53h,54h,55h,56h
+;	db 49h,50h,51h,52h,53h,54h,55h;,56h
 ;	db 57h,58h,59h,60h,61h,62h,63h,64h;,65h
 
-count dq 0ffffffffffffffffh
 ;align xmmword
-;messang db "hello world"
+messang db "hello world"
+count dq 0ffffffffffffffffh
 
 .code
 Debug proc

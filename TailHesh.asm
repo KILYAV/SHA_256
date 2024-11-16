@@ -50,6 +50,8 @@ TailHesh:
 	psllq mm4,20h
 	paddd mm0,mm4	
 	pshufw mm0,mm0,01001110b
+	
 	cmc
 jc	@b
+	add r9,08h
 ret

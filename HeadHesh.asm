@@ -17,9 +17,8 @@ HeadHesh:
 	paddd xmm5,xmm4
 ; w[i] + k[i] + h
 	movdq2q mm7,xmm0
-	paddd mm7,qword ptr[rbp]
+	paddd mm7,qword ptr[r9]
 	paddd mm7,mm3
-;	
 	shufps xmm0,xmm1,01001110b
 	shufps xmm1,xmm2,01001110b
 	shufps xmm2,xmm3,01001110b

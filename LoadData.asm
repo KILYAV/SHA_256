@@ -5,14 +5,14 @@ LoadData:
 jle	LoadPlugData
 
 	mov eax,40h
-	cmp edx,10h
+	cmp rdx,10h
 jge	LoadDataLine
 
 ret_LoadDataLine:
 	movd xmm5,eax
-	mov rax,[rsi]
+	mov rax,[r11]
 	bt edx,3
-	cmovc rax,[rsi + 8]
+	cmovc rax,[r11 + 8]
 	mov r8,80h
 	ror rax,cl
 	shld r8,rax,cl
@@ -20,7 +20,7 @@ ret_LoadDataLine:
 	xor rax,rax
 	bt edx,3
 	cmovc rax,r8
-	cmovc r8,[rsi]
+	cmovc r8,[r11]
 	
 	bswap rax
 	bswap r8
@@ -62,7 +62,7 @@ jl	ret_LoadDataLine
 	
 align xmmword
 LoadDataLine:
-	movdqu xmm3,xmmword ptr[rsi]
+	movdqu xmm3,xmmword ptr[r11]
 	movdqa xmm4,xmm3
 	psllw xmm3,8
 	psrlw xmm4,8
@@ -70,7 +70,7 @@ LoadDataLine:
 	pshufhw xmm3,xmm3,10110001b
 	pshuflw xmm3,xmm3,10110001b
 	
-	add rsi,10h
+	add r11,10h
 	sub rdx,10h
 	sub eax,10h
 	cmp eax,0
@@ -89,4 +89,5 @@ LoadPlugData:
 
 	movd xmm3,rcx
 	pshufd xmm3,xmm3,00011110b
+	sub rdx,40h
 ret

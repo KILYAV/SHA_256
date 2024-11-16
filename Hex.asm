@@ -1,4 +1,8 @@
 .code
+align xmmword
+?ImplHex@SHA256@KILYAV@@CA?AV?$array@D$0EA@@std@@PEBDI@Z proc
+?ImplHex@SHA256@KILYAV@@CA?AV?$array@D$0EA@@std@@PEBDI@Z endp
+
 Hex:
 	call Bin
 	

@@ -2,7 +2,7 @@
 align xmmword
 ?ImplBin@SHA256@KILYAV@@CA?AV?$array@E$0CA@@std@@PEBDI@Z proc
 ?ImplBin@SHA256@KILYAV@@CA?AV?$array@E$0CA@@std@@PEBDI@Z endp
-	
+
 Bin:
 	lea r9,[const]
 	mov r10,rcx

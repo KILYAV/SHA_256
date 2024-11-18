@@ -7,7 +7,7 @@
 ;	db 51h,52h,53h,54h,55h,56h;,57h,58h,59h,60h
 ;	db 61h,62h,63h,64h,65h,66h,67h,68h,69h,70h
 
-string db "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123"
+string db "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
 
 count db 0
 

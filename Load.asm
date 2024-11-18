@@ -81,7 +81,7 @@ align xmmword
 LoadPlugData:
 	setz al
 	movzx eax,al
-	shl eax,7
+	shl eax,31
 	movd xmm0,eax
 	
 	pxor xmm1,xmm1

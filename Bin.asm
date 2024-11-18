@@ -54,7 +54,7 @@ Block:
 	paddd mm1,qword ptr[r10 + 08h]
 	paddd mm2,qword ptr[r10 + 10h]
 	paddd mm3,qword ptr[r10 + 18h]
-		
+	sub r9,100h
 	cmp rdx,-8
 jge	Block
 	
